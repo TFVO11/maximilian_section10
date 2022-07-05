@@ -20,11 +20,12 @@ useEffect(()=>{
   const loginHandler = (email, password) => {
     // We should of course check email and password
     // But it's just a dummy/ demo anyways
-    localStorage.setItem('isLoggedIn', '1')
+    localStorage.setItem('isLoggedIn', '1');
     setIsLoggedIn(true);
   };
 
   const logoutHandler = () => {
+    localStorage.removeItem('isLoggedIn');
     setIsLoggedIn(false);
   };
 
@@ -44,3 +45,5 @@ export default App;
 
 //login program
 //we need to persist state when we restart web therefore we stored to data by using useEffect
+//useEffect is used when it start rendering and finish rendering
+//if no useEffect is infinite loop so we got a useEffect
