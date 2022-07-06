@@ -12,6 +12,16 @@ const Login = (props) => {
   const [formIsValid, setFormIsValid] = useState(false);
 
   useEffect(() => {
+
+    console.log('EFFECT RUNNING!');
+//clean up function
+    return () => {
+      console.log('EFFECT CLEANUP!');
+    };
+
+  }, []);
+
+  useEffect(() => {
     setTimeout(() => {
       console.log('checking form nalidity!');
 
