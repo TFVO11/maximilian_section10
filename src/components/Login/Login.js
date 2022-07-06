@@ -22,6 +22,7 @@ const Login = (props) => {
 
     return () => {
       console.log('CLEANUP');
+      clearTimeout(identifier);
     };
     //cleanup function: useEffect execute this function when next render. then cleanup fnt make it clear
   }, [enteredEmail, enteredPassword]);
@@ -105,3 +106,4 @@ export default Login;
 //&& is operate when two things is fullfill one && another one
 //in this component, useEffect is executed after [setFormIsValid, enteredEmail, enteredPassword] is changed
 //setTimeout is delay function 
+//clearTimeout() is clear cleanup function
