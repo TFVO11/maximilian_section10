@@ -22,13 +22,14 @@ const Login = (props) => {
   }, []);
 
   useEffect(() => {
-    setTimeout(() => {
+    const identifier = setTimeout(() => {
       console.log('checking form nalidity!');
 
       setFormIsValid(
         enteredEmail.includes('@') && enteredPassword.trim().length > 6
       );
     }, 500);
+    
 
     return () => {
       console.log('CLEANUP');
