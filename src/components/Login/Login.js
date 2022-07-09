@@ -1,22 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer} from 'react';
 
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
 import Button from '../UI/Button/Button';
 
+const emailReducer = (state, action) => {
+  if (action.type === 'USER_INPUT') {
+    return { value: action.valid, isValid: action.val.includes('@') };
+  };
+  if (action.type === 'USER_BLUR') {
+    return { value: state.value, isValid: state.value.includes('@') };
+  };
+  return { value: '', isValid: false };
+};
+
 const Login = (props) => {
-  const [enteredEmail, setEnteredEmail] = useState('');
-  const [emailIsValid, setEmailIsValid] = useState();
+  // const [enteredEmail, setEnteredEmail] = useState('');
+  // const [emailIsValid, setEmailIsValid] = useState();
   const [enteredPassword, setEnteredPassword] = useState('');
   const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
+
+  const [emailState, dispatchEmail] = useReducer(emailReducer, { 
+      value: '',
+      isValid: null,
+  });
 
   useEffect(() => {
 
     console.log('EFFECT RUNNING!');
 //clean up function
     return () => {
-      console.log('EFFECT CLEANUP!');
+      console.log('EFFECT CLEAN UP!');
     };
 
   }, []);
@@ -39,7 +54,7 @@ const Login = (props) => {
   // }, [enteredEmail, enteredPassword]);
 
   const emailChangeHandler = (event) => {
-    setEnteredEmail(event.target.value);
+    dispatchEmail({type: 'USER_INPUT', val: event.target.value});
 
     setFormIsValid(
       event.target.value.includes('@') && enteredPassword.trim().length > 6
@@ -55,7 +70,8 @@ const Login = (props) => {
   };
 
   const validateEmailHandler = () => {
-    setEmailIsValid(enteredEmail.includes('@'));
+    // setEmailIsValid(enteredEmail.includes('@'));
+    dispatchEmail({type: 'INPUT_BLUR'});
   };
 
   const validatePasswordHandler = () => {
@@ -118,3 +134,5 @@ export default Login;
 //in this component, useEffect is executed after [setFormIsValid, enteredEmail, enteredPassword] is changed
 //setTimeout is delay function 
 //clearTimeout() is clear cleanup function
+//useReducer can update a state they are beloged before in App.js
+//useReducer는 안에 ftn을 넣을 수 있지만 가독성을 위해 그리고 다른 component들과 상호작용할 필요가 없기 때문에 밖으로 뺀다.
